@@ -72,9 +72,6 @@ message PickCardResponse {
     string pickedCard = 1;
 }
 
-message SaveGameState {
-    string filename = 1;
-}
 
 message ClientGameMessage {
     oneof payload {
@@ -90,7 +87,6 @@ message ClientGameMessage {
         SelectXValueResponse            selectXValueResponse = 23;
         SelectAttackersResponse         selectAttackersResponse = 24;
         SelectBlockersResponse          selectBlockersResponse = 25;
-        SaveGameState                   saveGameState = 26;
         AssignDamageResponse            assignDamageResponse = 27;
         SelectKnowledgeResponse         selectKnowledgeResponse = 28;
         PickCardResponse                pickCardResponse = 29;

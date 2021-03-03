@@ -12,6 +12,8 @@ message LoginResponse {
     
 message NewGame {
     GameState game = 1;
+    GameType gameType = 2;
+    string aiId = 3;
 }
 
 message NewDraft {
