@@ -8,24 +8,27 @@ option java_package = "com.visitor.protocol";
 message LoginResponse {
     string gameId = 1;
     string playerId = 2;
-    string aiId = 3;
-    GameType gameType = 4;
 }
     
 message NewGame {
-    GameState game = 1;
-    GameType gameType = 2;
-    string aiId = 3;
+    GameType gameType = 1;
+    string aiId = 2;
+    GameStateP game = 3;
 }
 
 message NewDraft {
     DraftState draft = 1;
 }
 
+message GetCollectionResponse{
+    repeated CardP cards = 1;
+}
+
 message ServerMessage {
     oneof payload {
-        LoginResponse           loginResponse = 2;
-        NewGame                 newGame = 7;
-        NewDraft                newDraft = 8;
+        LoginResponse           loginResponse = 1;
+        NewGame                 newGame = 2;
+        NewDraft                newDraft = 3;
+        GetCollectionResponse   getCollectionResponse = 4;
     }
 }

@@ -11,9 +11,11 @@ enum Phase {
     BEGIN = 2;
     MAIN_BEFORE = 3;
     ATTACK = 4;
-    BLOCK = 5;
-    MAIN_AFTER = 6;
-    END = 7;
+    ATTACK_PLAY = 5;
+    BLOCK = 6;
+    BLOCK_PLAY = 7;
+    MAIN_AFTER = 8;
+    END = 9;
 }
 
 enum SelectFromType {
@@ -22,8 +24,7 @@ enum SelectFromType {
     HAND = 3;
     PLAY = 4;
     DISCARD_PILE = 5;
-    VOID = 6;
-    STACK = 7;
+    STACK = 6;
 }
 
 enum GameType {
@@ -90,33 +91,60 @@ message DamageAssignment {
     int32 damage = 2;
 }
 
-message Combat {
-    int32 health = 12;
-    int32 shield = 15;
-    int32 attack = 17;
-    bool deploying = 18;
-    string blockedAttacker = 19;
-    string attackTarget = 20;
-    repeated string combatAbilities = 21;
+message TargetSelection {
+    string id = 1;
+    repeated string targets = 2;
 }
 
-message Card {
+message Combat {
+    int32 health = 1;
+    int32 shield = 2;
+    int32 attack = 3;
+    bool deploying = 4;
+    string blockedAttacker = 5;
+    string attackTarget = 6;
+    repeated string combatAbilities = 7;
+    repeated string possibleBlockTargets = 8;
+}
+
+message Targeting {
+    string id = 1;
+    repeated string possibleTargets = 2;
+    int32 minTargets = 3;
+    int32 maxTargets = 4;
+    string targetMessage = 5;
+}
+
+message TargetingAbility {
+    string id = 1;
+    repeated Targeting targets = 2;
+    string text = 3;
+}
+
+message CardP {
     string id = 1;
     string name = 2;
     repeated CounterGroup counters = 3;
     bool depleted = 4;
     bool marked = 5;
     repeated string targets = 6;
-    string description = 7;
+    bool canAttack = 7;
     string cost = 8;
     repeated KnowledgeGroup knowledgeCost = 9;
     repeated string types = 10;
-    repeated string subtypes = 11;
+    bool canBlock = 11;
+    repeated string subtypes = 12;
     int32 delay = 13;
     int32 loyalty = 14;
+    bool canActivate = 15;
     Combat combat = 16;
     string set = 17;
     repeated string attachments = 18;
+    string description = 19;
+    bool canPlay = 20;
+    bool canStudy = 21;
+    repeated Targeting playTargets = 22;
+    repeated TargetingAbility activateTargets = 23;
 }
 
 message Player {
@@ -125,37 +153,33 @@ message Player {
     int32 deckSize = 3;
     int32 energy = 4;
     int32 maxEnergy = 5;
-    repeated Card hand = 6;
-    repeated Card play = 7;
-    repeated Card discardPile = 8;
-    repeated Card void = 9;
-    repeated KnowledgeGroup knowledgePool = 10;
-    int32 shield = 12;
-    int32 handSize = 13;
-    int32 health = 14;
-    int32 time = 15;
-    repeated KnowledgeGroup deckColors = 16;
+    repeated CardP hand = 6;
+    repeated CardP play = 7;
+    repeated CardP discardPile = 8;
+    repeated KnowledgeGroup knowledgePool = 9;
+    int32 shield = 10;
+    int32 handSize = 11;
+    int32 health = 12;
+    int32 time = 13;
+    repeated KnowledgeGroup deckColors = 14;
 }
 
-message GameState {
+message GameStateP {
     string id = 1;
-    Player player = 2;
-    Player opponent = 3;
-    string turnPlayer =  4;
-    string activePlayer = 5;
-    repeated Card stack = 6;
-    repeated string canPlay = 7;
-    repeated string canActivate = 8;
-    repeated string canStudy = 9;
-    repeated string attackers = 11;
-    repeated string blockers = 12;
-    Phase phase = 10;
+    Phase phase = 2;
+    string turnPlayer =  3;
+    string activePlayer = 4;
+    repeated string attackers = 5;
+    repeated string blockers = 6;
+    repeated CardP stack = 7;
+    Player player = 8;
+    Player opponent = 9;
 }
 
 message DraftState {
     string id = 1;
-    string playerId = 4;
     repeated string decklist = 2;
     bool completed = 3;
+    string playerId = 4;
 }
 

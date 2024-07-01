@@ -6,9 +6,9 @@ import "Types.proto";
  */
 
 message JoinQueue {
-    repeated string decklist = 3;
-    GameType gameType = 4;
-    string draftId = 5; //To be used when starting a draft game between two matched opponents
+    repeated string decklist = 1;
+    GameType gameType = 2;
+    string draftId = 3; //To be used when starting a draft game between two matched opponents
 }
 
 message LoadGame {
@@ -19,11 +19,14 @@ message RegisterGameConnection {
     string gameID = 1;
 }
 
+message GetCollection {
+}
 
 message ClientMessage {
     oneof payload {
-        JoinQueue                       joinQueue = 6;
-        RegisterGameConnection          registerGameConnection = 11;
-        LoadGame                        loadGame = 12;
+        JoinQueue                       joinQueue = 1;
+        RegisterGameConnection          registerGameConnection = 2;
+        LoadGame                        loadGame = 3;
+        GetCollection                   getCollection = 4;
     }
-};
+}
